@@ -1,0 +1,132 @@
+﻿<Window x:Class="WpfApp1.Window1"
+      
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="Книжный магазин" Height="600" Width="800">
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            
+            <Button Name="AddBookButton" Background="LightGreen" Content="Добавить книгу" Click="AddBookButton_Click" Margin="0,10" />
+            <Button Name="DeleteBookButton" Background="Red" Content="Удалить книгу" Click="DeleteBookButton_Click"  Margin="0,10" />
+            <Button Content="Сохранить изменения" Background="Blue" Click="SaveChangesButton_Click"  Margin="0,10" />
+            <Button Name="SellBookButton" Background="Orange"  Content="Продать книгу" Click="SellBookButton_Click" Margin="0,10" />
+            <Button Name="WriteOffBookButton" Background="Azure" Content="Списать книгу" Click="WriteOffBookButton_Click" Margin="0,10" />
+            <Button Name="AddDiscountBookButton" Background="Yellow" Content="Добавить скидку 10%"  Margin="0,10" Click="AddDiscountBookButton_Click" />
+          
+        </StackPanel>
+        <TabControl   Grid.Column="1">
+            <TabItem>
+                <TabItem.Header>
+                    Книги
+                </TabItem.Header>
+                <ListBox Grid.Column="0" Name="BooksListBox" DisplayMemberPath="Title" SelectionChanged="BooksListBox_SelectionChanged" />
+
+
+            </TabItem>
+            <TabItem Height="22" Margin="-2,-2,-2,0" VerticalAlignment="Top">
+                <TabItem.Header>
+                    Параметры
+                </TabItem.Header>
+                <StackPanel>
+                    <TextBlock Text="Название книги" />
+                    <TextBox Name="TitleTextBox" />
+                    <TextBlock Text="Автор книги" />
+                    <TextBox Name="AuthorTextBox" />
+                    <TextBlock Text="Издательство" />
+                    <TextBox Name="PublisherTextBox" />
+                    <TextBlock Text="Количество страниц" />
+                    <TextBox Name="PageCountTextBox" />
+                    <TextBlock Text="Жанр" />
+                    <TextBox Name="GenreTextBox" />
+                    <TextBlock Text="Год издания" />
+                    <TextBox Name="YearTextBox" />
+                    <TextBlock Text="Себестоимость" />
+                    <TextBox Name="CostPriceTextBox" />
+                    <TextBlock Text="Цена продажи" />
+                    <TextBox Name="SellingPriceTextBox" />
+                    <TextBlock Text="Есть ли продолжение у книги?" />
+                    <TextBox Name="IsPartOfSeriesTextBox" />
+                    <TextBlock Text="Информация о книге?" />
+                    <TextBox Name="InfoSeriesTextBox" />
+                    <TextBlock Text="Количество списанных экземпляров" />
+                    <TextBox Name="BrokenCountTextBox" />
+                    <TextBlock Text="Количество книг на складе" />
+                    <TextBox Name="StockTextBox" />
+                    <TextBlock Text="Количество проданных экземпляров" />
+                    <TextBox Name="SoldCountTextBox" />
+                    <TextBlock Text="Есть ли скидка?" />
+                    <TextBox Name="DiscountTextBox" />
+                    <TextBlock Text="Дата реализации книги" />
+                    <TextBox Name="ReleaseDateTextBox" />
+
+                </StackPanel>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    Популярные запросы
+                </TabItem.Header>
+                
+                <Grid>
+                   
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="4*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0">
+                    <Button Content="Список новинок" Click="ShowNewReleases_Click"  />
+                    <Button Content="Самые продаваемые книги" Click="ShowBestSellers_Click"  />
+                    <Button Content="Популярные авторы" Click="ShowPopularAuthors_Click" />
+                    <Button Content="Популярные жанры" Click="ShowPopularGenres_Click" />
+                        <ComboBox Name="PeriodComboBox" >
+                            <ComboBoxItem>За день</ComboBoxItem>
+                            <ComboBoxItem>За неделю</ComboBoxItem>
+                            <ComboBoxItem>За месяц</ComboBoxItem>
+                            <ComboBoxItem>За год</ComboBoxItem>
+                        </ComboBox>
+                        
+                     
+                    </StackPanel>
+
+                    <ListBox Grid.Row="1" Grid.Column="1" Name="ResultsListBox"  />
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    Поиск...
+                </TabItem.Header>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="4*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0"  >
+
+                        <TextBlock Text="Поиск книги:" FontWeight="Bold" Margin="0,10" />
+                        <TextBox Name="SearchTextBox" Text="Введите название, автора или жанр" />
+                        <Button Content="Найти" Click="SearchButton_Click" Margin="0,20" />
+                    </StackPanel>
+
+                    <ListBox Grid.Row="1" Background="AliceBlue" Name="SearchResultsListBox" DisplayMemberPath="Title"  />
+                        
+                 
+                </Grid>
+            </TabItem>
+            
+            
+
+
+
+        </TabControl>
+    </Grid>
+</Window>
