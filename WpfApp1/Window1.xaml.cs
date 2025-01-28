@@ -77,7 +77,7 @@ namespace WpfApp1
             }
             else
             {
-                MessageBox.Show("Заполните все поля корректно!");
+                MessageBox.Show("Заполните все поля корректно!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -116,7 +116,7 @@ namespace WpfApp1
             }
             else
             {
-                MessageBox.Show("Заполните все поля корректно!");
+                MessageBox.Show("Заполните все поля корректно!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -191,12 +191,12 @@ namespace WpfApp1
                 }
                 else
                 {
-                    MessageBox.Show("Нет книг на складе для продажи!");
+                    MessageBox.Show("Нет книг на складе для продажи!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Выберите книгу для продажи!");
+                MessageBox.Show("Выберите книгу для продажи!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -226,8 +226,9 @@ namespace WpfApp1
 
         private void ShowNewReleases_Click(object sender, RoutedEventArgs e)//список новинок
         {
+            DateTime startDate = GetStartDate();
             var newReleases = context.Books
-         .Where(b => b.ReleaseDate >= DateTime.Now.AddDays(-30))
+         .Where(b => b.ReleaseDate > startDate)
          .OrderByDescending(b => b.ReleaseDate)
          .Select(b => $"{b.Title} ({b.Author})")
          .ToList();
@@ -238,8 +239,8 @@ namespace WpfApp1
         {
             DateTime startDate = GetStartDate();
 
-            var bestSellers = context.Books
-                .Where(b => b.SoldCount > 0)
+            List<string> bestSellers = context.Books
+                .Where(b => b.SoldCount > 0 && b.ReleaseDate > startDate)
                 .OrderByDescending(b => b.SoldCount)
                 .Select(b => $"{b.Title} ({b.Author}) - Продано: {b.SoldCount}")
                 .ToList();
@@ -250,7 +251,8 @@ namespace WpfApp1
         {
             DateTime startDate = GetStartDate();
 
-            var popularAuthors = context.Books
+            List<string> popularAuthors = context.Books
+                .Where(b => b.ReleaseDate > startDate)
                 .GroupBy(b => b.Author)
                 .Select(g => new
                 {
@@ -258,6 +260,7 @@ namespace WpfApp1
                     TotalSold = g.Sum(b => b.SoldCount)
                 })
                 .OrderByDescending(g => g.TotalSold)
+
                 .Select(g => $"{g.Author} - Продано: {g.TotalSold}")
                 .ToList();
 
@@ -268,6 +271,7 @@ namespace WpfApp1
             DateTime startDate = GetStartDate();
 
             var popularGenres = context.Books
+                .Where(b => b.ReleaseDate > startDate)
                 .GroupBy(b => b.Genre)
                 .Select(g => new
                 {
@@ -280,7 +284,7 @@ namespace WpfApp1
 
             ResultsListBox.ItemsSource = popularGenres;
         }
-        private DateTime GetStartDate()
+        private DateTime GetStartDate()//возвращает за какой период смотреть дату
         {
             var selectedPeriod = (PeriodComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
 
@@ -290,7 +294,8 @@ namespace WpfApp1
                 "За неделю" => DateTime.Now.AddDays(-7),
                 "За месяц" => DateTime.Now.AddMonths(-1),
                 "За год" => DateTime.Now.AddYears(-1),
-                _ => DateTime.MinValue
+                "За все время" => DateTime.MinValue, //  вернуть минимальное значение даты
+                _ => DateTime.Now // На всякий случай, если выбрано что-то неожиданное, возвращаем текущее время
             };
         }
 

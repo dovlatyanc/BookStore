@@ -92,6 +92,7 @@
                             <ComboBoxItem>За неделю</ComboBoxItem>
                             <ComboBoxItem>За месяц</ComboBoxItem>
                             <ComboBoxItem>За год</ComboBoxItem>
+                            <ComboBoxItem>За все время</ComboBoxItem>
                         </ComboBox>
                         
                      

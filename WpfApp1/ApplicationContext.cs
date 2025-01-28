@@ -13,6 +13,7 @@ namespace WpfApp1
 
         public ApplicationContext()
         {
+            
             Database.EnsureCreated();
         }
 
