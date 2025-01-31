@@ -18,9 +18,11 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
+        ApplicationContext context;
         public MainWindow()
         {
             InitializeComponent();
+            context = new ApplicationContext();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -43,9 +45,7 @@ namespace WpfApp1
                 SaveUserCredentials(credentials);
             }
 
-            if ((username == "admin" && password == "admin")
-                || (username == "Administrator" && password == "Qwerty123")
-                || (username == "Admin123" && password == "12345678"))
+            if (context.CheckCredentials(username, password))
             {
 
                 Window window = new Window1();
